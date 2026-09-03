@@ -53,9 +53,9 @@ env:
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}-2"
   # Custom adds
-  RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
-  RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
-  DEFAULT_PASSWORD: "${{ secrets.DEFAULT_PASSWORD }}"
+  # RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
+  # RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
+  # DEFAULT_PASSWORD: "${{ secrets.DEFAULT_PASSWORD }}"
 
 jobs:
   generate-bridge:
