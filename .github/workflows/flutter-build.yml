@@ -1,14 +1,15 @@
 name: Build the flutter version of the RustDesk
 
 on:
-  workflow_call:
-    inputs:
-      upload-artifact:
-        type: boolean
-        default: true
-      upload-tag:
-        type: string
-        default: "nightly"
+  # workflow_call:
+  #   inputs:
+  #     upload-artifact:
+  #       type: boolean
+  #       default: true
+  #     upload-tag:
+  #       type: string
+  #       default: "nightly"
+  workflow_dispatch:
 
 # NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
 # variables from this workflow!
@@ -51,6 +52,10 @@ env:
   MACOS_P12_BASE64: "${{ secrets.MACOS_P12_BASE64 }}"
   UPLOAD_ARTIFACT: "${{ inputs.upload-artifact }}"
   SIGN_BASE_URL: "${{ secrets.SIGN_BASE_URL }}-2"
+  # Custom adds
+  RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
+  RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
+  DEFAULT_PASSWORD: "${{ secrets.DEFAULT_PASSWORD }}"
 
 jobs:
   generate-bridge:
