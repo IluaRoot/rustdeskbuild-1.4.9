@@ -143,7 +143,8 @@ const CHARS: &[char] = &[
 // pub const RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
 // pub const RENDEZVOUS_SERVERS: &[&str] = &[env!("RENDEZVOUS_SERVERS")];
 // pub const PUBLIC_RS_PUB_KEY: &str = env!("PUBLIC_RS_PUB_KEY");
-pub const PUBLIC_RS_PUB_KEY: &str = match option_env!("PUBLIC_RS_PUB_KEY") {
+pub const PUBLIC_RS_PUB_KEY: &str = RS_PUB_KEY;
+pub const RS_PUB_KEY: &str = match option_env!("RS_PUB_KEY") {
     Some(val) => val,
     None => "rs-ny.rustdesk.com", 
 };
