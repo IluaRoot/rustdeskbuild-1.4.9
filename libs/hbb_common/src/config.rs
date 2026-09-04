@@ -68,11 +68,11 @@ lazy_static::lazy_static! {
     static ref TRUSTED_DEVICES: RwLock<(Vec<TrustedDevice>, bool)> = Default::default();
     static ref ONLINE: Mutex<HashMap<String, i64>> = Default::default();
     // Get from ENV
-    // pub static ref PROD_RENDEZVOUS_SERVER: RwLock<String> = RwLock::new(match option_env!("RENDEZVOUS_SERVER") {
-    //     Some(key) if !key.is_empty() => key,
-    //     _ => "",
-    // }.to_owned());
-    pub static ref PROD_RENDEZVOUS_SERVER: RwLock<String> = RwLock::new("".to_owned());
+    pub static ref PROD_RENDEZVOUS_SERVER: RwLock<String> = RwLock::new(match option_env!("RENDEZVOUS_SERVER") {
+        Some(key) if !key.is_empty() => key,
+        _ => "",
+    }.to_owned());
+    // pub static ref PROD_RENDEZVOUS_SERVER: RwLock<String> = RwLock::new("".to_owned());
     pub static ref EXE_RENDEZVOUS_SERVER: RwLock<String> = Default::default();
     pub static ref APP_NAME: RwLock<String> = RwLock::new("RustDesk".to_owned());
     static ref KEY_PAIR: Mutex<Option<KeyPair>> = Default::default();
@@ -89,7 +89,7 @@ lazy_static::lazy_static! {
                 // Устанавливаем сам постоянный пароль
                 map.insert("password".to_owned(), password.to_owned());
                 // ВАЖНО: переключаем метод верификации на использование постоянного пароля
-                map.insert("verification-method".to_owned(), "use-permanent".to_owned());
+                // map.insert("verification-method".to_owned(), "use-permanent".to_owned());
             }
         }
     // 2. Включаем опцию "Разрешить удаленное управление настройками" по умолчанию
@@ -139,28 +139,13 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-// pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];
-// pub const RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
-// pub const RENDEZVOUS_SERVERS: &[&str] = &[env!("RENDEZVOUS_SERVERS")];
-// pub const PUBLIC_RS_PUB_KEY: &str = env!("PUBLIC_RS_PUB_KEY");
-pub const PUBLIC_RS_PUB_KEY: &str = RS_PUB_KEY;
+pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];
+pub const PUBLIC_RS_PUB_KEY: &str = "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=";
+
 pub const RS_PUB_KEY: &str = match option_env!("RS_PUB_KEY") {
-    Some(val) => val,
-    None => "rs-ny.rustdesk.com", 
+    Some(key) if !key.is_empty() => key,
+    _ => PUBLIC_RS_PUB_KEY,
 };
-
-pub const RENDEZVOUS_SERVERS: &[&str] = &[
-    match option_env!("RENDEZVOUS_SERVERS") {
-        Some(val) => val,
-        None => "OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=",
-    }
-];
-
-// Get from ENV
-// pub const RS_PUB_KEY: &str = match option_env!("RS_PUB_KEY") {
-//     Some(key) if !key.is_empty() => key,
-//     _ => PUBLIC_RS_PUB_KEY,
-// };
 
 pub const RENDEZVOUS_PORT: i32 = 21116;
 pub const RELAY_PORT: i32 = 21117;
