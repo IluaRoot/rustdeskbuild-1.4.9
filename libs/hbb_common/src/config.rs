@@ -83,17 +83,20 @@ lazy_static::lazy_static! {
     pub static ref DEFAULT_SETTINGS: RwLock<HashMap<String, String>> = RwLock::new({
         let mut map = HashMap::new();
     
-    // Считываем пароль из секретов GitHub во время компиляции
-        if let Some(password) = option_env!("DEFAULT_PASSWORD") {
-            if !password.is_empty() {
-                // Устанавливаем сам постоянный пароль
-                map.insert("password".to_owned(), password.to_owned());
-                // ВАЖНО: переключаем метод верификации на использование постоянного пароля
-                // map.insert("verification-method".to_owned(), "use-permanent".to_owned());
+        // Persist password
+        if let (Some(password), Some(salt)) = (option_env!("DEFAULT_PASSWORD"), option_env!("DEFAULT_SALT")) {
+            if !password.is_empty() && !salt.is_empty() {
+                
+                let h1 = permanent_password::compute_permanent_password_h1(password, salt);
+                
+                if let Some(encrypted_storage) = permanent_password::encode_permanent_password_encrypted_storage_from_h1(&h1) {
+                    map.insert("password".to_owned(), encrypted_storage);
+                    map.insert("salt".to_owned(), salt.to_owned());
+                }
             }
-        }
-    // 2. Включаем опцию "Разрешить удаленное управление настройками" по умолчанию
-        map.insert("allow-remote-config-modification".to_owned(), "Y".to_owned()); 
+    // Custom config settings
+        map.insert("allow-remote-config-modification".to_owned(), "Y".to_owned());
+        map.insert("enable-check-update".to_owned(), "N".to_owned());
         map
     });
     pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
