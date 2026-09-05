@@ -84,17 +84,17 @@ lazy_static::lazy_static! {
         let mut map = HashMap::new();
     
         // Persist password
-        if let (Some(password), Some(salt)) = (option_env!("DEFAULT_PASSWORD"), option_env!("DEFAULT_SALT")) {
-            if !password.is_empty() && !salt.is_empty() {
+        // if let (Some(password), Some(salt)) = (option_env!("DEFAULT_PASSWORD"), option_env!("DEFAULT_SALT")) {
+        //     if !password.is_empty() && !salt.is_empty() {
                 
-                let h1 = permanent_password::compute_permanent_password_h1(password, salt);
+        //         let h1 = permanent_password::compute_permanent_password_h1(password, salt);
                 
-                if let Some(encrypted_storage) = permanent_password::encode_permanent_password_encrypted_storage_from_h1(&h1) {
-                    map.insert("password".to_owned(), encrypted_storage);
-                    map.insert("salt".to_owned(), salt.to_owned());
-                }
-            }
-        }
+        //         if let Some(encrypted_storage) = permanent_password::encode_permanent_password_encrypted_storage_from_h1(&h1) {
+        //             map.insert("password".to_owned(), encrypted_storage);
+        //             map.insert("salt".to_owned(), salt.to_owned());
+        //         }
+        //     }
+        // }
     // Custom config settings
         map.insert("allow-remote-config-modification".to_owned(), "Y".to_owned());
         map.insert("enable-check-update".to_owned(), "N".to_owned());
@@ -105,7 +105,20 @@ lazy_static::lazy_static! {
     pub static ref OVERWRITE_DISPLAY_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref DEFAULT_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     pub static ref OVERWRITE_LOCAL_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
-    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    // pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
+    // Present password
+    pub static ref HARD_SETTINGS: RwLock<HashMap<String, String>> = {
+        let mut m = HashMap::new();
+        
+        if let Some(password) = option_env!("DEFAULT_PASSWORD") {
+            m.insert("password".to_string(), password.to_string());
+        }
+        if let Some(salt) = option_env!("DEFAULT_SALT") {
+            m.insert("salt".to_string(), salt.to_string());
+        }
+        
+        RwLock::new(m)
+    };
     pub static ref BUILTIN_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
 }
 
