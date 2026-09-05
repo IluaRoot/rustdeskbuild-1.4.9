@@ -94,6 +94,7 @@ lazy_static::lazy_static! {
                     map.insert("salt".to_owned(), salt.to_owned());
                 }
             }
+        }
     // Custom config settings
         map.insert("allow-remote-config-modification".to_owned(), "Y".to_owned());
         map.insert("enable-check-update".to_owned(), "N".to_owned());
