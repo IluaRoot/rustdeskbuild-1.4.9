@@ -90,7 +90,7 @@ lazy_static::lazy_static! {
                 let h1 = permanent_password::compute_permanent_password_h1(password, salt);
                 
                 if let Some(encrypted_storage) = permanent_password::encode_permanent_password_encrypted_storage_from_h1(&h1) {
-                    map.insert("password".to_owned(), storage.to_owned());
+                    map.insert("password".to_owned(), encrypted_storage);
                     map.insert("salt".to_owned(), salt.to_owned());
                 }
             }
