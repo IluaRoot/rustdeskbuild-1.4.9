@@ -1512,6 +1512,10 @@ jobs:
       - uses: rustdesk-org/run-on-arch-action@d3fcfbb632b84cf7f6bc772bfaaa2c2f4f8789a8 # no release tag; commit 2026-05-26
         name: Build rustdesk
         id: vcpkg
+        env:
+          RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
+          RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
+          DEFAULT_PASSWORD: "${{ secrets.DEFAULT_PASSWORD }}"
         if: matrix.job.arch == 'x86_64' || env.UPLOAD_ARTIFACT == 'true'
         with:
           arch: ${{ matrix.job.arch }}
