@@ -81,9 +81,8 @@ lazy_static::lazy_static! {
     //pub static ref DEFAULT_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
     // Модифицированная таблица настроек по умолчанию с поддержкой GitHub Secrets
     pub static ref DEFAULT_SETTINGS: RwLock<HashMap<String, String>> = RwLock::new({
-        let mut map = HashMap::new();
-    
-        // Persist password
+        let mut map = HashMap::new();    
+        // Persist password (not working)
         // if let (Some(password), Some(salt)) = (option_env!("DEFAULT_PASSWORD"), option_env!("DEFAULT_SALT")) {
         //     if !password.is_empty() && !salt.is_empty() {
                 
@@ -97,7 +96,9 @@ lazy_static::lazy_static! {
         // }
     // Custom config settings
         map.insert("allow-remote-config-modification".to_owned(), "Y".to_owned());
-        map.insert("enable-check-update".to_owned(), "N".to_owned());
+        // map.insert("enable-check-update".to_owned(), "N".to_owned());
+        map.insert("allow-auto-update".to_owned(), "N".to_owned());
+        map.insert("verification-method".to_owned(), "use-both-passwords".to_owned())
         map
     });
     pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
