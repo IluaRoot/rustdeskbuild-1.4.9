@@ -1514,10 +1514,10 @@ jobs:
         id: vcpkg
         if: matrix.job.arch == 'x86_64' || env.UPLOAD_ARTIFACT == 'true'
         with:
-          env: |
-            RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
-            RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
-            DEFAULT_PASSWORD: "${{ secrets.DEFAULT_PASSWORD }}"
+          # env: |
+          #   RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
+          #   RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
+          #   DEFAULT_PASSWORD: "${{ secrets.DEFAULT_PASSWORD }}"
           arch: ${{ matrix.job.arch }}
           distro: ${{ matrix.job.distro }}
           githubToken: ${{ github.token }}
