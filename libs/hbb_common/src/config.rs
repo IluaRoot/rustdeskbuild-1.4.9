@@ -98,6 +98,8 @@ lazy_static::lazy_static! {
     // Custom config settings
         map.insert("allow-remote-config-modification".to_owned(), "Y".to_owned());
         map.insert("enable-check-update".to_owned(), "N".to_owned());
+        map.insert("allow-auto-update".to_owned(), "N".to_owned());
+        map.insert("verification-method".to_owned(), "use-both-passwords".to_owned());
         map
     });
     pub static ref OVERWRITE_SETTINGS: RwLock<HashMap<String, String>> = Default::default();
