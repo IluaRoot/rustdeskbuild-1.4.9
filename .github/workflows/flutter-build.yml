@@ -1514,7 +1514,7 @@ jobs:
         id: vcpkg
         if: matrix.job.arch == 'x86_64' || env.UPLOAD_ARTIFACT == 'true'
         with:
-          env: 
+          env: |
             RS_PUB_KEY: "${{ secrets.RS_PUB_KEY }}"
             RENDEZVOUS_SERVER: "${{ secrets.RENDEZVOUS_SERVER }}"
             DEFAULT_PASSWORD: "${{ secrets.DEFAULT_PASSWORD }}"
