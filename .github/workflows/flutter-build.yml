@@ -1570,9 +1570,10 @@ jobs:
             ls -l ./
             tree -L 3 /opt/artifacts/vcpkg/installed
           run: |
-            echo -n "$RENDEZVOUS_SERVER"
             # disable git safe.directory
             git config --global --add safe.directory "*"
+            # Check ENV`
+            echo -n "$RENDEZVOUS_SERVER"
             # rust
             pushd /opt
             # do not use rustup, because memory overflow in qemu
