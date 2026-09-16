@@ -1514,10 +1514,6 @@ jobs:
         id: vcpkg
         if: matrix.job.arch == 'x86_64' || env.UPLOAD_ARTIFACT == 'true'
         with:
-          # env: |
-          #   "RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}"
-          #   "RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}"
-          #   "DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}"
           arch: ${{ matrix.job.arch }}
           distro: ${{ matrix.job.distro }}
           githubToken: ${{ github.token }}
@@ -1527,6 +1523,10 @@ jobs:
           dockerRunArgs: |
             --volume "${PWD}:/workspace"
             --volume "/opt/artifacts:/opt/artifacts"
+            -e "RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}"
+            -e "RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}"
+            -e "DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}"
+
           shell: /bin/bash
           install: |
             apt-get update -y
