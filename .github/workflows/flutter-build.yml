@@ -1523,9 +1523,9 @@ jobs:
           dockerRunArgs: |
             --volume "${PWD}:/workspace"
             --volume "/opt/artifacts:/opt/artifacts"
-            -e "RS_PUB_KEY: ${{ secrets.RS_PUB_KEY }}"
-            -e "RENDEZVOUS_SERVER: ${{ secrets.RENDEZVOUS_SERVER }}"
-            -e "DEFAULT_PASSWORD: ${{ secrets.DEFAULT_PASSWORD }}"
+            -e RS_PUB_KEY="${{ secrets.RS_PUB_KEY }}"
+            -e "RENDEZVOUS_SERVER="${{ secrets.RENDEZVOUS_SERVER }}""
+            -e "DEFAULT_PASSWORD="${{ secrets.DEFAULT_PASSWORD }}""
 
           shell: /bin/bash
           install: |
